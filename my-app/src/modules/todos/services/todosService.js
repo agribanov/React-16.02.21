@@ -1,7 +1,9 @@
 import { TODOS_URL } from '../constants';
 
-export function getTodos() {
-    return fetch(TODOS_URL).then((res) => res.json());
+export function getTodos(searchString) {
+    const query = searchString ? '?title=' + searchString : '';
+
+    return fetch(TODOS_URL + query).then((res) => res.json());
 }
 
 export function updateTodo(newItem) {

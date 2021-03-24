@@ -1,4 +1,12 @@
-import React, { Component } from 'react';
+import React, {
+    Component,
+    useCallback,
+    useEffect,
+    useMemo,
+    useState,
+} from 'react';
+import { useAsync, useLocalStorage } from '../../common/hooks';
+import { useTodos } from '../hooks';
 import {
     createTodo,
     deleteTodo,
@@ -7,55 +15,47 @@ import {
 } from '../services/todosService';
 import TodoForm from './TodoForm';
 import TodoList from './TodoList';
+import TodosFilter from './TodosFilter';
 
-export default class Todos extends Component {
-    state = {
-        list: [],
-    };
+export default function Todos() {
+    const [filter, setFilter] = useLocalStorage('filter', 'all');
+    const [search, setSearch] = useLocalStorage('search');
 
-    componentDidMount() {
-        getTodos().then((list) => this.setState({ list }));
-    }
+    const { status, list, toggleItem, deleteItem, createItem } = useTodos(
+        search
+    );
 
-    toggleItem = (id) => {
-        const item = this.state.list.find((l) => l.id === id);
-        const newItem = { ...item, completed: !item.completed };
+    const filteredList = useMemo(() => {
+        if (filter !== 'all') {
+            return list.filter(
+                (item) =>
+                    (filter === 'done' && item.completed) ||
+                    (filter === 'notdone' && !item.completed)
+            );
+        } else {
+            return list;
+        }
+    }, [filter, list]);
 
-        updateTodo(newItem).then(() => {
-            this.setState({
-                list: this.state.list.map((item) =>
-                    item.id !== id ? item : newItem
-                ),
-            });
-        });
-    };
-
-    deleteItem = (id) => {
-        deleteTodo(id);
-
-        this.setState({
-            list: this.state.list.filter((item) => item.id !== id),
-        });
-    };
-
-    createItem = (newItem) => {
-        newItem.completed = false;
-
-        createTodo(newItem).then((data) => {
-            this.setState({ list: [...this.state.list, data] });
-        });
-    };
-
-    render() {
-        return (
-            <>
+    return (
+        <>
+            <TodosFilter
+                filter={filter}
+                setFilter={setFilter}
+                search={search}
+                setSearch={setSearch}
+            />
+            {status === 'LOADING' ? (
+                'Loading...'
+            ) : status === 'DONE' ? (
                 <TodoList
-                    list={this.state.list}
-                    onToggle={this.toggleItem}
-                    onDelete={this.deleteItem}
+                    list={filteredList}
+                    onToggle={toggleItem}
+                    onDelete={deleteItem}
                 />
-                <TodoForm onSave={this.createItem} />
-            </>
-        );
-    }
+            ) : null}
+
+            <TodoForm onSave={createItem} />
+        </>
+    );
 }

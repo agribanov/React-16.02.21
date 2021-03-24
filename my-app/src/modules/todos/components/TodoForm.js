@@ -1,36 +1,34 @@
-import React, { Component } from 'react';
+import React, { useContext, useState } from 'react';
+import { useUser } from '../../common/contexts/userContext';
 
-export default class TodoForm extends Component {
-    state = {
-        todo: {
-            title: '',
-        },
-    };
+export default function TodoForm({ onSave }) {
+    const [todo, setTodo] = useState({ title: '' });
 
-    onFormSubmit = (e) => {
+    const { user } = useUser();
+
+    function onFormSubmit(e) {
         e.preventDefault();
 
-        this.props.onSave(this.state.todo);
-        this.setState({ todo: { title: '' } });
-    };
-
-    onInputChange = (e) => {
-        this.setState({
-            todo: { ...this.state.todo, [e.target.name]: e.target.value },
-        });
-    };
-
-    render() {
-        return (
-            <form onSubmit={this.onFormSubmit}>
-                <input
-                    type="text"
-                    name="title"
-                    value={this.state.todo.title}
-                    onChange={this.onInputChange}
-                />
-                <button>Save</button>
-            </form>
-        );
+        onSave(todo);
+        setTodo({ title: '' });
     }
+
+    function onInputChange(e) {
+        setTodo({
+            ...todo,
+            [e.target.name]: e.target.value,
+        });
+    }
+
+    return (
+        <form onSubmit={onFormSubmit}>
+            <input
+                type="text"
+                name="title"
+                value={todo.title}
+                onChange={onInputChange}
+            />
+            <button> {user ? user.name : 'Anonym'} Save</button>
+        </form>
+    );
 }
