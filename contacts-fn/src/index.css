@@ -1,0 +1,65 @@
+.add-new-contact-btn {
+    width: 100%;
+    font-size: 30px;
+    background-color: #fff;
+    border-color: lightgray;
+    padding: 15px;
+    margin-bottom: 30px;
+}
+
+.contacts-list {
+    width: 100%;
+    list-style: none;
+    padding: 0;
+    font-size: 20px;
+}
+
+.contacts-list li:hover {
+    background-color: lightgray;
+    cursor: pointer;
+}
+
+.contacts-list li {
+    text-align: center;
+    padding: 15px;
+    border-bottom: 1px solid grey;
+}
+
+.contact-form {
+    width: 100%;
+    border-left: 1px solid lightgrey;
+    font-size: 24px;
+    padding: 0px 40px;
+    box-sizing: border-box;
+}
+
+.contact-form label {
+    font-weight: 600;
+    display: block;
+}
+
+.contact-form input[type='text'] {
+    padding: 5px 10px;
+    font-size: 20px;
+    margin: 10px 0 40px;
+    width: 90%;
+}
+.contact-form .buttons {
+    height: 50px;
+}
+.contact-form .buttons button {
+    font-size: 20px;
+    padding: 5px;
+    background-color: #fff;
+    border-color: lightgray;
+}
+
+/* .theme-dark button {
+    background-color: black;
+    color: white;
+} */
+/* 
+.theme-dark .ui-list {
+    background-color: black;
+    color: white;
+} */
