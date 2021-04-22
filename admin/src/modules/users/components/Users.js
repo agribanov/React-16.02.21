@@ -1,15 +1,16 @@
 import React from 'react';
-import Loading from '../../common/components/Loading';
-import useUsers from '../hooks/useUsers';
-import UsersList from './UsersList';
+import { Switch, Route, useRouteMatch } from 'react-router';
+import { UserEditForm } from './UserForm';
+import UsersPage from './UsersPage';
 
 function Users() {
-    const { users, isLoading } = useUsers();
+    const { path } = useRouteMatch();
+
     return (
-        <div>
-            <h1>Users</h1>
-            {isLoading ? <Loading /> : <UsersList list={users} />}
-        </div>
+        <Switch>
+            <Route path={path} exact component={UsersPage} />
+            <Route path={path + '/:userId'} component={UserEditForm} />
+        </Switch>
     );
 }
 

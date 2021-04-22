@@ -1,21 +1,23 @@
+import { AppBar, Button, Toolbar, Typography } from '@material-ui/core';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import useStyles from '../../common/hooks/useStyles';
 
 function Header() {
     return (
-        <div>
-            <ul>
-                <li>
-                    <Link to="/dashboard">Home</Link>
-                </li>
-                <li>
-                    <Link to="/users">Users</Link>
-                </li>
-                <li>
-                    <Link to="/albums">Albums</Link>
-                </li>
-            </ul>
-        </div>
+        <AppBar position="static">
+            <Toolbar>
+                <Link to="/dashboard" component={Button} color="inherit">
+                    Home
+                </Link>
+                <Link to="/users" component={Button} color="inherit">
+                    Users
+                </Link>
+                <Link to="/albums" component={Button} color="inherit">
+                    Albums
+                </Link>
+            </Toolbar>
+        </AppBar>
     );
 }
 

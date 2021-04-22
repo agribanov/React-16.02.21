@@ -1,4 +1,4 @@
-import { Container } from '@material-ui/core';
+import { Box, Container } from '@material-ui/core';
 import React from 'react';
 import {
     BrowserRouter as Router,
@@ -14,21 +14,23 @@ import Users from './modules/users/components/Users';
 
 function App() {
     return (
-        <Container maxWidth="md">
+        <Container maxWidth="lg">
             <Router>
                 <Header />
-                <Switch>
-                    <Route path="/dashboard" component={Dashboard} />
-                    <Route path="/users" component={Users} />
-                    <Route path="/albums" component={Albums} />
-                    <Route path="/notfound" component={NotFound} />
-                    <Route path="/" exact>
-                        <Redirect to="/dashboard" />
-                    </Route>
-                    <Route path="*">
-                        <Redirect to="/notfound" />
-                    </Route>
-                </Switch>
+                <Box my={4}>
+                    <Switch>
+                        <Route path="/dashboard" component={Dashboard} />
+                        <Route path="/users" component={Users} />
+                        <Route path="/albums" component={Albums} />
+                        <Route path="/notfound" component={NotFound} />
+                        <Route path="/" exact>
+                            <Redirect to="/dashboard" />
+                        </Route>
+                        <Route path="*">
+                            <Redirect to="/notfound" />
+                        </Route>
+                    </Switch>
+                </Box>
             </Router>
         </Container>
     );
