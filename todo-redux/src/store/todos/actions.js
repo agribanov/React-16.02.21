@@ -7,10 +7,14 @@ export const removeTodo = (payload) => ({
 });
 
 export const TODOS_ADD_TODO = 'TODOS_ADD_TODO';
-export const addTodo = (payload) => ({
-    type: TODOS_ADD_TODO,
-    payload,
-});
+export const addTodo = (payload) => (dispatch) => {
+    api.post('', payload).then(({ data }) =>
+        dispatch({
+            type: TODOS_ADD_TODO,
+            payload: data,
+        })
+    );
+};
 
 export const TODOS_SET_TODOS = 'TODOS_SET_TODOS';
 export const setTodos = (payload) => ({

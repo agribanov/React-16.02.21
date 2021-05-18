@@ -1,22 +1,31 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import Container from '@material-ui/core/Container';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Redirect,
+} from 'react-router-dom';
 import store from './store';
-import Filters from './components/Filters';
-import List from './components/ListContainer';
-import Form from './components/Form';
-import { fetchTodos } from './store/todos/actions';
 
-store.dispatch(fetchTodos());
+import Todos from './components/todos/Todos';
+import { Box, Button } from '@material-ui/core';
+
 function App() {
     return (
-        <Container maxWidth="md">
-            <Provider store={store}>
-                <Filters />
-                <List />
-                <Form />
-            </Provider>
-        </Container>
+        <Router>
+            <Container maxWidth="md">
+                <Provider store={store}>
+                    <Switch>
+                        <Route path="/todos" component={Todos} />
+                        <Route path="*">
+                            <Redirect to="/todos" />
+                        </Route>
+                    </Switch>
+                </Provider>
+            </Container>
+        </Router>
     );
 }
 
