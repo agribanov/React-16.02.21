@@ -1,3 +1,4 @@
+import propTypes from '../../prop-types';
 import React from 'react';
 import {
     ListItem,
@@ -18,18 +19,28 @@ function TodoListItem({ todo, toggleTodo, removeTodo }) {
                     {todo.isDone ? <CheckIcon /> : <CheckBoxOutlineBlankIcon />}
                 </ListItemIcon>
                 <ListItemText primary={todo.title} />
-                <ListItemSecondaryAction
-                    onClick={(e) => {
-                        e.preventDefault();
-                        removeTodo(todo.id);
-                    }}
-                >
-                    <DeleteIcon />
-                </ListItemSecondaryAction>
+                {removeTodo && (
+                    <ListItemSecondaryAction
+                        onClick={(e) => {
+                            e.preventDefault();
+                            removeTodo(todo.id);
+                        }}
+                    >
+                        <DeleteIcon />
+                    </ListItemSecondaryAction>
+                )}
             </ListItem>
             <Divider />
         </>
     );
 }
+
+TodoListItem.propTypes = {
+    todo: propTypes.todoListItem,
+    toggleTodo: propTypes.func.isRequired,
+    removeTodo: propTypes.func,
+};
+
+console.log(propTypes);
 
 export default TodoListItem;

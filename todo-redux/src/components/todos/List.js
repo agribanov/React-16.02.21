@@ -4,6 +4,7 @@ import ListItem from './ListItem';
 import { connect } from 'react-redux';
 import { removeTodo, toggleTodo, fetchTodos } from '../../store/todos/actions';
 import { FILTER_DONE, FILTER_NOT_DONE } from '../../filters';
+import propTypes from '../../prop-types';
 
 function TodosList({ todos, removeTodo, toggleTodo, fetchTodos }) {
     useEffect(() => {
@@ -22,6 +23,11 @@ function TodosList({ todos, removeTodo, toggleTodo, fetchTodos }) {
         </List>
     );
 }
+
+TodosList.propTypes = {
+    todos: propTypes.todoList,
+};
+
 function mapStateToProps(state) {
     let todos = state.todos.items;
 
